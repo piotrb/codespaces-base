@@ -41,7 +41,7 @@ FROM base as ruby-build
 USER vscode
 
 RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv \
-  && cd ~/.rbenv && src/configure && make -C src && \
+  && cd ~/.rbenv && src/configure && make -C src \
   && mkdir -p ~/.rbenv/plugins \
   && git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build \
   && git clone https://github.com/garnieretienne/rvm-download.git ~/.rbenv/plugins/rvm-download
@@ -56,12 +56,12 @@ FROM base as node-build
 
 USER vscode
 
-RUN git clone https://github.com/nodenv/nodenv.git ~/.nodenv && \
-  cd ~/.nodenv && src/configure && make -C src && \
-  mkdir -p ~/.nodenv/plugins && \
-  git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build && \
-  git clone https://github.com/nodenv/node-build-update-defs.git ~/.nodenv/plugins/node-build-update-defs && \
-  git clone https://github.com/nodenv/nodenv-package-rehash.git  ~/.nodenv/plugins/nodenv-package-rehash
+RUN git clone https://github.com/nodenv/nodenv.git ~/.nodenv \
+  && cd ~/.nodenv && src/configure && make -C src && \
+  && mkdir -p ~/.nodenv/plugins \
+  && git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build \
+  && git clone https://github.com/nodenv/node-build-update-defs.git ~/.nodenv/plugins/node-build-update-defs \
+  && git clone https://github.com/nodenv/nodenv-package-rehash.git  ~/.nodenv/plugins/nodenv-package-rehash
 
 ENV PATH=/home/vscode/.nodenv/bin:/home/vscode/.nodenv/shims:$PATH
 
