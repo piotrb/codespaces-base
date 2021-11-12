@@ -71,10 +71,6 @@ ENV PATH=/home/vscode/.nodenv/bin:/home/vscode/.nodenv/shims:$PATH
 
 FROM base as pre-main
 
-# Default value to allow debug server to serve content over GitHub Codespace's port forwarding service
-# The value is a comma-separated list of allowed domains 
-ENV RAILS_DEVELOPMENT_HOSTS=".githubpreview.dev"
-
 # Install Starship globally
 RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
 
@@ -100,6 +96,12 @@ RUN apt-get update \
 ###############################################################################
 
 FROM pre-main as main-minimal
+
+# Default value to allow debug server to serve content over GitHub Codespace's port forwarding service
+# The value is a comma-separated list of allowed domains 
+ENV RAILS_DEVELOPMENT_HOSTS=".githubpreview.dev"
+
+ENV DOCKER_BUILDKIT=1
 
 COPY --from=ruby-build --chown=vscode:vscode /home/vscode/.rbenv /home/vscode/.rbenv
 ENV PATH=/home/vscode/.rbenv/bin:/home/vscode/.rbenv/shims:$PATH
