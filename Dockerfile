@@ -101,12 +101,8 @@ RUN apt-get update \
 
 FROM pre-main as main-minimal
 
-USER vscode
-
-COPY --from=ruby-build /home/vscode/.rbenv /home/vscode/.rbenv
+COPY --from=ruby-build --chown=vscode:vscode /home/vscode/.rbenv /home/vscode/.rbenv
 ENV PATH=/home/vscode/.rbenv/bin:/home/vscode/.rbenv/shims:$PATH
 
-COPY --from=node-build /home/vscode/.nodenv /home/vscode/.nodenv
+COPY --from=node-build --chown=vscode:vscode /home/vscode/.nodenv /home/vscode/.nodenv
 ENV PATH=/home/vscode/.nodenv/bin:/home/vscode/.nodenv/shims:$PATH
-
-USER root
