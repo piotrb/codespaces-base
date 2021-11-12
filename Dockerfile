@@ -83,7 +83,7 @@ RUN curl -L -o /tmp/overmind.gz https://github.com/DarthSim/overmind/releases/do
 
 # Install Hivemind globally
 ARG HIVEMIND_VERSION=1.0.6
-RUN curl -L -o /tmp/hivemind.gz https://github.com/DarthSim/hivemind/releases/download/v${OVERMIND_VERSION}/hivemind-v${HIVEMIND_VERSION}-linux-amd64.gz && \
+RUN curl -L -o /tmp/hivemind.gz https://github.com/DarthSim/hivemind/releases/download/v${HIVEMIND_VERSION}/hivemind-v${HIVEMIND_VERSION}-linux-amd64.gz && \
   gunzip /tmp/hivemind.gz && \
   chmod +x /tmp/hivemind && \
   mv /tmp/hivemind /usr/local/bin/
