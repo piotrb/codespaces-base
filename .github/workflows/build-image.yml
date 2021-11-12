@@ -31,44 +31,44 @@ jobs:
         with:
           images: "${{ github.repository }}"
 
-      - name: Build and push (pre-main)
-        uses: docker/build-push-action@v2
-        env:
-          stage: pre-main
-        with:
-          context: .
-          target: ${{ env.stage }}
-          tags: "${{ env.docker-repo }}:${{ env.stage }}"
-          push: true
-          cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
-          cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
-          labels: ${{ steps.meta.outputs.labels }}
+      # - name: Build and push (pre-main)
+      #   uses: docker/build-push-action@v2
+      #   env:
+      #     stage: pre-main
+      #   with:
+      #     context: .
+      #     target: ${{ env.stage }}
+      #     tags: "${{ env.docker-repo }}:${{ env.stage }}"
+      #     push: true
+      #     cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
+      #     cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
+      #     labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Build and push (ruby-build)
-        uses: docker/build-push-action@v2
-        env:
-          stage: ruby-build
-        with:
-          context: .
-          target: ${{ env.stage }}
-          tags: "${{ env.docker-repo }}:${{ env.stage }}"
-          push: true
-          cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
-          cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
-          labels: ${{ steps.meta.outputs.labels }}
+      # - name: Build and push (ruby-build)
+      #   uses: docker/build-push-action@v2
+      #   env:
+      #     stage: ruby-build
+      #   with:
+      #     context: .
+      #     target: ${{ env.stage }}
+      #     tags: "${{ env.docker-repo }}:${{ env.stage }}"
+      #     push: true
+      #     cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
+      #     cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
+      #     labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Build and push (node-build)
-        uses: docker/build-push-action@v2
-        env:
-          stage: node-build
-        with:
-          context: .
-          target: ${{ env.stage }}
-          tags: "${{ env.docker-repo }}:${{ env.stage }}"
-          push: true
-          cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
-          cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
-          labels: ${{ steps.meta.outputs.labels }}
+      # - name: Build and push (node-build)
+      #   uses: docker/build-push-action@v2
+      #   env:
+      #     stage: node-build
+      #   with:
+      #     context: .
+      #     target: ${{ env.stage }}
+      #     tags: "${{ env.docker-repo }}:${{ env.stage }}"
+      #     push: true
+      #     cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
+      #     cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
+      #     labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push (main-minimal)
         uses: docker/build-push-action@v2
