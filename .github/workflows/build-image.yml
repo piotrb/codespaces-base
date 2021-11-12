@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      docker-repo: "ghcr.io/${{ github.repository_owner }}/${{ github.repository }}"
+      docker-repo: "ghcr.io/${{ github.repository }}"
 
     steps:
       - name: Set up Docker Buildx
@@ -29,7 +29,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: "${{ github.repository_owner }}/${{ github.repository }}"
+          images: "${{ github.repository }}"
 
       - name: Build and push (pre-main)
         uses: docker/build-push-action@v2
@@ -42,6 +42,7 @@ jobs:
           push: true
           cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
           cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push (ruby-build)
         uses: docker/build-push-action@v2
@@ -54,6 +55,7 @@ jobs:
           push: true
           cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
           cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push (node-build)
         uses: docker/build-push-action@v2
@@ -66,3 +68,4 @@ jobs:
           push: true
           cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
           cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
+          labels: ${{ steps.meta.outputs.labels }}
