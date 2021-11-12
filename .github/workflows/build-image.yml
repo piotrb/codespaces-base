@@ -24,7 +24,7 @@ jobs:
           stage: pre-main
         with:
           context: .
-          stage: ${{ env.stage }}
+          target: ${{ env.stage }}
           tags: "${{ env.docker-repo }}:${{ env.stage }}"
           push: true
           cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
@@ -36,7 +36,7 @@ jobs:
           stage: ruby-build
         with:
           context: .
-          stage: ${{ env.stage }}
+          target: ${{ env.stage }}
           tags: "${{ env.docker-repo }}:${{ env.stage }}"
           push: true
           cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
@@ -49,7 +49,7 @@ jobs:
           stage: node-build
         with:
           context: .
-          stage: ${{ env.stage }}
+          target: ${{ env.stage }}
           tags: "${{ env.docker-repo }}:${{ env.stage }}"
           push: true
           cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
