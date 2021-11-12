@@ -1,2 +1,2 @@
 # codespaces-base
-This is my base for using CodeSpaces
+This is my base for using Github Codespaces

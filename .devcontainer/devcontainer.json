@@ -1,0 +1,81 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.192.0/containers/ruby-rails-postgres
+{
+	"name": "Ruby on Rails & Postgres (Community)",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+
+	"userEnvProbe": "interactiveShell",
+
+	// Use this environment variable if you need to bind mount your local source code into a new container.
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"sqltools.connections": [
+			{
+				"name": "Rails Development Database",
+				"driver": "PostgreSQL",
+				"previewLimit": 50,
+				"server": "127.0.0.1",
+				"port": 5432,
+
+				// update this to match config/database.yml
+				"database": "budget_development",
+				"username": "postgresql",
+				"password": "postgresql"
+			},
+			{
+				"name": "Rails Test Database",
+				"driver": "PostgreSQL",
+				"previewLimit": 50,
+				"server": "127.0.0.1",
+				"port": 5432,
+
+				// update this to match config/database.yml
+				"database": "budget_test",
+				"username": "postgresql",
+				"password": "postgresql"
+			}
+		]
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"rebornix.Ruby",
+		"mtxr.sqltools",
+		"mtxr.sqltools-driver-pg",
+		"ms-azuretools.vscode-docker",
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [3000, 5432],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "bundle install && rake db:setup",
+
+	"initializeCommand": "./.devcontainer/initializeCommand.sh",
+	"onCreateCommand": "echo onCreateCommand",
+	"updateContentCommand": "echo updateContentCommand",
+	"postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+	"postStartCommand": "./.devcontainer/postStartCommand.sh",
+	"postAttachCommand": "echo postAttachCommand",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+
+	// "features": {
+		// "docker-in-docker": {
+		// 	"version": "latest",
+		// 	"moby": true
+		// },
+		// "docker-from-docker": {
+		// 	"version": "latest",
+		// 	"moby": true
+		// },
+		// "github": "latest",
+	// }
+}
