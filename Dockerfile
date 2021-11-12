@@ -40,10 +40,11 @@ FROM base as ruby-build
 
 USER vscode
 
-RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv && \
-  cd ~/.rbenv && src/configure && make -C src && \
-  mkdir -p ~/.rbenv/plugins && \
-  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv \
+  && cd ~/.rbenv && src/configure && make -C src && \
+  && mkdir -p ~/.rbenv/plugins \
+  && git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build \
+  && git clone https://github.com/garnieretienne/rvm-download.git ~/.rbenv/plugins/rvm-download
 
 ENV PATH=/home/vscode/.rbenv/bin:/home/vscode/.rbenv/shims:$PATH
 
@@ -85,7 +86,7 @@ RUN curl -L -o /tmp/overmind.gz https://github.com/DarthSim/overmind/releases/do
   mv /tmp/overmind /usr/local/bin/
 
 # Install Library Script Stuff
-COPY .devcontainer/library-scripts/*.sh /tmp/library-scripts/
+COPY library-scripts/*.sh /tmp/library-scripts/
 
 ## Install Docker
 ENV DOCKER_BUILDKIT=1
@@ -93,60 +94,3 @@ ENV DOCKER_BUILDKIT=1
 RUN apt-get update \
   && bash /tmp/library-scripts/docker-debian.sh \
   && rm -rf /var/lib/apt/lists/*
-
-###############################################################################
-## Ruby Bootstrap
-###############################################################################
-
-# FROM ruby-build as ruby
-
-# RUN mkdir -p /tmp/bootstrap
-# WORKDIR /tmp/bootstrap
-# COPY .ruby-version .
-
-# RUN RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install
-
-# COPY Gemfile Gemfile.lock ./
-# RUN bundle
-
-###############################################################################
-## Node Bootstrap
-###############################################################################
-
-# FROM node-build as node
-
-# RUN mkdir -p /tmp/bootstrap
-# WORKDIR /tmp/bootstrap
-# COPY .node-version ./
-
-# RUN nodenv update-version-defs
-# RUN nodenv install
-
-# RUN npm install --global yarn
-
-# COPY package.json yarn.lock ./
-# COPY .yarnrc.yml ./
-# RUN mkdir -p .yarn
-# COPY .yarn/plugins .yarn/plugins/
-# COPY .yarn/releases .yarn/releases/
-# # RUN ls -al .yarn
-# # RUN find .yarn
-# # RUN mkdir -p .yarn/cache
-
-# RUN yarn
-
-###############################################################################
-## Main Stage
-###############################################################################
-
-# FROM pre-main
-
-# USER vscode
-
-# COPY --from=ruby /home/vscode/.rbenv /home/vscode/.rbenv
-# ENV PATH=/home/vscode/.rbenv/bin:/home/vscode/.rbenv/shims:$PATH
-
-# COPY --from=node /home/vscode/.nodenv /home/vscode/.nodenv
-# ENV PATH=/home/vscode/.nodenv/bin:/home/vscode/.nodenv/shims:$PATH
-
-# USER root
