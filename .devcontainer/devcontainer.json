@@ -55,7 +55,7 @@
 	// "forwardPorts": [3000, 5432],
 
 	// A command to run locally before anything else. This command is run before "onCreateCommand".
-  "initializeCommand": "./.devcontainer/initializeCommand.sh",
+  "initializeCommand": "echo initializeCommand",
 
   // A command to run when creating the container. This command is run after "initializeCommand" and before "updateContentCommand".
   "onCreateCommand": "echo onCreateCommand",
