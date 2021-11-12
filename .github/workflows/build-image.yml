@@ -12,9 +12,6 @@ jobs:
       docker-repo: "ghcr.io/${{ github.repository_owner }}/${{ github.repository }}"
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -24,6 +21,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: "${{ github.repository_owner }}/${{ github.repository }}"
 
       - name: Build and push (pre-main)
         uses: docker/build-push-action@v2
