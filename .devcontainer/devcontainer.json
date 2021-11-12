@@ -54,28 +54,25 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [3000, 5432],
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "bundle install && rake db:setup",
+	// A command to run locally before anything else. This command is run before "onCreateCommand".
+  "initializeCommand": "./.devcontainer/initializeCommand.sh",
 
-	"initializeCommand": "./.devcontainer/initializeCommand.sh",
-	"onCreateCommand": "echo onCreateCommand",
-	"updateContentCommand": "echo updateContentCommand",
-	"postCreateCommand": "./.devcontainer/postCreateCommand.sh",
-	"postStartCommand": "./.devcontainer/postStartCommand.sh",
-	"postAttachCommand": "echo postAttachCommand",
+  // A command to run when creating the container. This command is run after "initializeCommand" and before "updateContentCommand".
+  "onCreateCommand": "echo onCreateCommand",
+
+  // A command to run when creating the container and rerun when the workspace content was updated while creating the container.
+  // This command is run after "onCreateCommand" and before "postCreateCommand".
+  "updateContentCommand": "echo updateContentCommand",
+	
+  // A command to run after creating the container. This command is run after "updateContentCommand" and before "postStartCommand".
+  "postCreateCommand": "echo postCreateCommand",
+	
+  // A command to run after starting the container. This command is run after "postCreateCommand" and before "postAttachCommand".
+  "postStartCommand": "./.devcontainer/postStartCommand.sh",
+	
+  // A command to run when attaching to the container. This command is run after "postStartCommand".
+  "postAttachCommand": "echo postAttachCommand",
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
-
-	// "features": {
-		// "docker-in-docker": {
-		// 	"version": "latest",
-		// 	"moby": true
-		// },
-		// "docker-from-docker": {
-		// 	"version": "latest",
-		// 	"moby": true
-		// },
-		// "github": "latest",
-	// }
 }
