@@ -94,3 +94,19 @@ ENV DOCKER_BUILDKIT=1
 RUN apt-get update \
   && bash /tmp/library-scripts/docker-debian.sh \
   && rm -rf /var/lib/apt/lists/*
+
+###############################################################################
+## Main Minimal Stage
+###############################################################################
+
+FROM pre-main as main-minimal
+
+USER vscode
+
+COPY --from=ruby-build /home/vscode/.rbenv /home/vscode/.rbenv
+ENV PATH=/home/vscode/.rbenv/bin:/home/vscode/.rbenv/shims:$PATH
+
+COPY --from=node-build /home/vscode/.nodenv /home/vscode/.nodenv
+ENV PATH=/home/vscode/.nodenv/bin:/home/vscode/.nodenv/shims:$PATH
+
+USER root

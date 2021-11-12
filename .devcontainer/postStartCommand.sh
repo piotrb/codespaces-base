@@ -5,7 +5,8 @@
 set -e
 
 echo "Installing Ruby ..." > /dev/stderr
-rbenv install --skip-existing
+rbenv download `cat .ruby-version`
+#rbenv install --skip-existing
 
 echo "Installing Node ..." > /dev/stderr
 nodenv update-version-defs

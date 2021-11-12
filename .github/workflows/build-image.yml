@@ -69,3 +69,16 @@ jobs:
           cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
           cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push (main-minimal)
+        uses: docker/build-push-action@v2
+        env:
+          stage: main-minimal
+        with:
+          context: .
+          target: ${{ env.stage }}
+          tags: "${{ env.docker-repo }}:${{ env.stage }}"
+          push: true
+          cache-from: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache
+          cache-to: type=registry,ref=${{ env.docker-repo }}:${{ env.stage }}-cache,mode=max
+          labels: ${{ steps.meta.outputs.labels }}
